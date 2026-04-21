@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHREF Generator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .container { background: #1e293b; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.3); width: 100%; max-width: 500px; }
+    h1 { font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center; color: #38bdf8; }
+    label { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; color: #94a3b8; }
+    input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; background: #334155; border: 1px solid #475569; border-radius: 8px; color: #f8fafc; font-size: 1rem; }
+    input:focus { outline: none; border-color: #38bdf8; }
+    button { width: 100%; padding: 0.875rem; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    button:hover { background: #0ea5e9; }
+    #result { margin-top: 1.25rem; padding: 1rem; background: #334155; border-radius: 8px; word-break: break-all; display: none; }
+    #result.show { display: block; }
+    #result-label { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem; }
+    .copy-btn { margin-top: 0.75rem; background: #475569; color: #e2e8f0; }
+    .copy-btn:hover { background: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AHREF Generator</h1>
+    <label for="anchor">Anchor Text</label>
+    <input type="text" id="anchor" placeholder="e.g. Click here">
+
+    <label for="url">URL</label>
+    <input type="url" id="url" placeholder="https://example.com">
+
+    <button onclick="generate()">Generate AHREF</button>
+
+    <div id="result">
+      <div id="result-label">Generated AHREF:</div>
+      <div id="output"></div>
+      <button class="copy-btn" onclick="copyResult()">Copy to Clipboard</button>
+    </div>
+  </div>
+
+  <script>
+    function generate() {
+      const anchor = document.getElementById('anchor').value.trim();
+      const url = document.getElementById('url').value.trim();
+
+      if (!anchor || !url) {
+        alert('Please fill in both fields.');
+        return;
+      }
+
+      const ahref = `<a href="${url}">${anchor}</a>`;
+      document.getElementById('output').textContent = ahref;
+      document.getElementById('result').classList.add('show');
+    }
+
+    function copyResult() {
+      const output = document.getElementById('output').textContent;
+      navigator.clipboard.writeText(output).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy to Clipboard', 1500);
+      });
+    }
+  </script>
+</body>
+</html>
